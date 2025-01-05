@@ -1,27 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valo Striek - Home</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Moon AI Beta</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            color: #00fff2;
+            text-shadow: 0 0 10px rgba(0, 255, 242, 0.5);
+            margin-bottom: 1rem;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        #chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-message, .ai-message {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #00fff2, #0096ff);
+            margin-left: auto;
+            color: #000;
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+            margin-right: auto;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+#user-input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 255, 242, 0.5);
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #00fff2, #0096ff);
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00fff2;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="support.html">Support</a></li>
-                <li><a href="info.html">Info</a></li>
-                <li><a href="download.html">Download</a></li>
-            </ul>
-        </nav>
-    </header>
-    <section class="section">
-        <h1>Welcome to Valo Striek</h1>
-        <p>Your ultimate gaming experience awaits.</p>
-        <p>Lets Make a best experience With Valo Strike</p>
-        <p>💛</p>
-    </section>
+    <div class="header">
+        <div class="logo">ðŸŒ™ Moon AI Beta</div>
+    </div>
+    <div class="chat-container">
+        <div id="chat-messages"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ Ù‡Ù†Ø§..." autocomplete="off">
+            <button onclick="sendMessage()">Ø¥Ø±Ø³Ø§Ù„</button>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = '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';
+
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input').value;
+            if (!userInput.trim()) return;
+
+const chatMessages = document.getElementById('chat-messages');
+            
+            // Add user message
+            chatMessages.innerHTML += `<div class="user-message">${userInput}</div>`;
+            document.getElementById('user-input').value = '';
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{role: "user", content: userInput}]
+                    })
+                });
+
+                const data = await response.json();
+                const aiResponse = data.choices[0].message.content;
+
+                // Add AI response
+                chatMessages.innerHTML += `<div class="ai-message">${aiResponse}</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error('Error:', error);
+                chatMessages.innerHTML += `<div class="ai-message">Ø¹Ø°Ø±Ø§Ù‹ØŒ Ø­Ø¯Ø« Ø®Ø·Ø£. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.</div>`;
+            }
+        }
+
+        // Allow sending message with Enter key
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
 </body>
-</html>
+    </html>
