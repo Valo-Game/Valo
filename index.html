@@ -128,13 +128,13 @@
 </head>
 <body>
     <div class="header">
-        <div class="logo">ðŸŒ™ Moon AI Beta</div>
+        <div class="logo">🌙 Moon AI Beta</div>
     </div>
     <div class="chat-container">
         <div id="chat-messages"></div>
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="Ø§ÙƒØªØ¨ Ø±Ø³Ø§Ù„ØªÙƒ Ù‡Ù†Ø§..." autocomplete="off">
-            <button onclick="sendMessage()">Ø¥Ø±Ø³Ø§Ù„</button>
+            <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+            <button onclick="sendMessage()">إرسال</button>
         </div>
     </div>
 
@@ -175,7 +175,7 @@ const chatMessages = document.getElementById('chat-messages');
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             } catch (error) {
                 console.error('Error:', error);
-                chatMessages.innerHTML += `<div class="ai-message">Ø¹Ø°Ø±Ø§Ù‹ØŒ Ø­Ø¯Ø« Ø®Ø·Ø£. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.</div>`;
+                chatMessages.innerHTML += `<div class="ai-message">عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.</div>`;
             }
         }
 
@@ -187,4 +187,4 @@ const chatMessages = document.getElementById('chat-messages');
         });
     </script>
 </body>
-    </html>
+</html>
